@@ -1,6 +1,5 @@
 import request from '../utils/request.js'
 
-
 export function getInfoApi(params) {
     return new Promise((resolve, reject) => {
         request({
