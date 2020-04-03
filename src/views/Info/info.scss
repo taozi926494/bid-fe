@@ -1,0 +1,25 @@
+.container{
+    .info{
+        width: 60%;
+        margin: 0 auto;
+        .tip{
+            span{
+                margin-right: 20px;
+            }
+        }
+        h5 {
+            line-height: 24px;
+            font-size: 14px;
+            color: #a00000;
+            font-weight: bolder;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .text{
+            text-align: left;
+            line-height: 35px;
+            text-indent:35px;
+        }
+    
+    }
+}

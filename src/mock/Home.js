@@ -1,6 +1,7 @@
 import { Mock, successRes } from './preSet';
 
 export const listData = Mock.mock(RegExp('/dataset' + ".*"), 'get', options => {
+    console.log(options)
     return {
         data: [{
                 announce_type: "regional",

@@ -3,10 +3,16 @@
     background-color: #f0f0f0;
     .data-list {
         width: 70%;
-        margin: 0 auto;
+        margin: 20px auto;
+        background-color: white;
+        padding: 15px 80px;
     }
-    &-carousel {
-        width: 100%;
+    .pagination{
+        width: 70%;
+        margin: 20px auto;
+        .el-pagination{
+            float:left
+        }
     }
     .el-input__inner {
         width: 150px;

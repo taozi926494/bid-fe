@@ -36,6 +36,7 @@
           v-model="gradeData"
           clearable
           placeholder="请选择"
+          @change="changeRelation({id, gradeData})"
         >
           <el-option
             v-for="item in labelGradeOptions"
@@ -97,16 +98,6 @@ export default {
         "2657": "成交公告",
         "2658": "废标终止"
       },
-      // label_grade_options: [{
-      //       value: '初级',
-      //       label: '初级'
-      //     }, {
-      //       value: '中级',
-      //       label: '中级'
-      //     }, {
-      //       value: '高级',
-      //       label: '高级'
-      //     }]
       labelGradeOptions: ['初级', '中级', '高级']
     };
   },
@@ -131,6 +122,7 @@ export default {
     text-decoration: none;
     color: #409eff;
     text-align: left;
+    margin: 15px 0px;
   }
   &-info {
     text-align: left;

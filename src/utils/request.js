@@ -2,8 +2,8 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 
 const service = axios.create({
-    baseURL: process.env.NODE_ENV === 'development' ? '' : '填写真正的后端地址',
-    // baseURL: process.env.NODE_ENV === 'development' ? 'http://172.16.13.21:5100' : '填写真正的后端地址',
+    // baseURL: process.env.NODE_ENV === 'development' ? '' : '填写真正的后端地址',
+    baseURL: process.env.NODE_ENV === 'development' ? 'http://172.16.13.21:5100' : '填写真正的后端地址',
     timeout: 15000,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     withCredentials: true

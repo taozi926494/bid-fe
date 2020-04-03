@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- 数据列表 -->
     <div class="data-list">
       <DataItem
         v-for="data in dataList"
@@ -8,15 +9,18 @@
         :title="data.title"
         :region="data.region"
         :institution="data.institution"
-        :href="data.url"
+        :href="'#/detail?uuid='+data.id"
         :relation="data.relation"
         :type="data.bid_type"
         :publicDate="data.public_date"
-        :role="'1'"
+        :role="user.role"
+        :grade="data.grade"
         @changeRelation="changeRelation"
       />
     </div>
-    <el-pagination
+    <!-- 分页 -->
+    <div class="pagination">
+      <el-pagination
       background
       layout="total, prev, pager, next"
       @current-change="handleCurrentChange"
@@ -24,6 +28,8 @@
       :page-size="pagination.page_size"
       :total="pagination.total"
     ></el-pagination>
+    </div>
+    
   </div>
 </template>
 
@@ -35,16 +41,18 @@
 // @ is an alias to /src
 import DataItem from "./components/DataItem";
 import { getListApi, editeLabelApi } from "@/api/List.js";
-import request from "@/utils/request";
+import { getUser } from "@/utils/user.js";
 
 export default {
   name: "Home",
   data() {
     return {
       dataList: [],
+      user: {},
       pagination: {
         page: 1,
-        page_size: 10
+        page_size: 8,
+        total: 0
       }
     };
   },
@@ -52,9 +60,11 @@ export default {
     DataItem
   },
   mounted() {
+    this.user = getUser();
     this.getData();
   },
   methods: {
+    // 获取数据
     async getData() {
       var params = {
         page: this.pagination.page,
@@ -77,8 +87,42 @@ export default {
         }
       }
     },
+
+    // 分页
+    handleCurrentChange(currentPage) { 
+      this.pagination.page = currentPage;
+      this.getData();
+    },
+
+    // 编辑标签或者相关性的实现函数
+    async editLabel(id, value) {
+      // 声明参数
+      var params;
+      // 判断数据类型, 如果是布尔类型, 则更新的是相关性字段
+      if(value instanceof Boolean){
+        params = {
+          id: Number(id),
+          relation: value?"是":"否",
+          grade: ''
+        }
+      } else {
+        // 更新发展阶段字段
+        params = {
+          id: Number(id),
+          relation: "是",
+          grade: value
+        } 
+      }
+      // 向后端发起请求实现更新
+      const res = await editeLabelApi(params);
+      if(res.data == "ok") {
+        this.$message.success('修改成功');
+      }
+    },
+    
+    // 编辑标签或者相关性监听函数
     changeRelation(data) {
-      console.log("emited ", data);
+      this.editLabel(data.id, data.relationData);
     }
   }
 };
