@@ -21,13 +21,13 @@
     <!-- 分页 -->
     <div class="pagination">
       <el-pagination
-      background
-      layout="total, prev, pager, next"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.page"
-      :page-size="pagination.page_size"
-      :total="pagination.total"
-    ></el-pagination>
+        background
+        layout="total, prev, pager, next"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.page"
+        :page-size="pagination.page_size"
+        :total="pagination.total">
+      </el-pagination>
     </div>
     
   </div>
@@ -99,7 +99,7 @@ export default {
       // 声明参数
       var params;
       // 判断数据类型, 如果是布尔类型, 则更新的是相关性字段
-      if(value instanceof Boolean){
+      if(typeof(value) === "boolean"){
         params = {
           id: Number(id),
           relation: value?"是":"否",
@@ -116,6 +116,7 @@ export default {
       // 向后端发起请求实现更新
       const res = await editeLabelApi(params);
       if(res.data == "ok") {
+        this.getData();
         this.$message.success('修改成功');
       }
     },
