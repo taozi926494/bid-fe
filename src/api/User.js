@@ -15,3 +15,19 @@ export const loginApi = (params) => {
         })
     })
 }
+
+
+
+export const subscription = (params) => {
+    return new Promise((resolve, reject) => {
+        request({
+            url: '/user',
+            method: 'put',
+            data: querystring.stringify(params)
+        }).then((res) => {
+            resolve(res)
+        }).catch((e) => {
+            reject(e)
+        })
+    })
+}
