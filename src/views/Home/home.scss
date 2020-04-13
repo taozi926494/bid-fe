@@ -1,21 +1,41 @@
 .home {
     width: 100%;
     background-color: #f0f0f0;
+    padding: 20px 100px;
     .data-list {
-        width: 70%;
+        width: 100%;
         margin: 20px auto;
         background-color: white;
-        padding: 15px 80px;
+        padding: 15px;
     }
-    .pagination{
-        width: 70%;
+    .pagination {
+        width: 100%;
         margin: 20px auto;
-        .el-pagination{
-            float:left
+        .el-pagination {
+            float: left
         }
     }
-    .el-input__inner {
-        width: 150px;
-        height: 35px;
+    .order-btn {
+        position: fixed;
+        left: 25px;
+        bottom: 50%;
+        font-size: 14px;
+        cursor: pointer;
+        i {
+            display: block;
+            font-size: 26px;
+            color: $color-main-blue;
+        }
+    }
+    .drawer {
+        text-align: left;
+        .el-drawer__body {
+            padding: 0 20px !important;
+        }
+        .title {
+            margin-top: 30px;
+            padding-left: 10px;
+            border-left: 4px solid $color-main-blue;
+        }
     }
 }

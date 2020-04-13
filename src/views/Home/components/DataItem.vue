@@ -4,11 +4,11 @@
     <div class="data-item-info">
       <span>
         <label>类型：</label>
-        {{ bidTypeDict[type] }}
+        {{ $BID_TYPE[type] }}
       </span>
       <span>
         <label>发布时间：</label>
-        {{ publicDate }}
+        {{ publicDate | formatTime }}
       </span>
       <span>
         <label>地域：</label>
@@ -20,30 +20,36 @@
       </span>
     </div>
     <!-- 添加标签模块 -->
-    <div class="data-item-label" v-show="role=='1'?true:false">
+    <div class="data-item-label" v-show="role==1?true:false">
       <span>
-        <label>相关性：</label>
+        <label>与公司业务相关性：</label>
         <el-switch
           v-model="relationData"
-          active-text="是"
-          inactive-text="否"
-          @change="changeRelation({id, relationData})"
+          active-text="相关"
+          inactive-text="不相关"
+          :active-value="1"
+          :inactive-value="0"
+          @change="onDataItemChange"
         ></el-switch>
       </span>
-      <span class="label-grade" v-show="relation">
-        <label>发展阶段：</label>
+      <span class="label-grade" v-show="relation == 1">
+        <label>信息化建设阶段：</label>
         <el-select
           v-model="gradeData"
           clearable
           placeholder="请选择"
-          @change="changeRelation({id, gradeData})"
+          size="small"
+          @change="onDataItemChange"
         >
-          <el-option
-            v-for="item in labelGradeOptions"
-            :key="item"
-            :label="item"
-            :value="item"
-          ></el-option>
+          <el-tooltip
+            v-for="(item, key) in $IT_LEVELS"
+            :key="key"
+            effect="dark"
+            :content="item.tip"
+            placement="right"
+          >
+            <el-option :value="key" :label="item.level"></el-option>
+          </el-tooltip>
         </el-select>
       </span>
     </div>
@@ -53,57 +59,47 @@
 <script>
 export default {
   props: {
-    id: { type: String, default: "" },
+    id: { type: Number },
     href: { type: String, default: "" },
     title: { type: String, default: "" },
     type: { type: String, default: "" },
     publicDate: { type: String, default: "" },
     region: { type: String, default: "" },
     institution: { type: String, default: "" },
-    role: { type: String, default: "0" },
-    grade: { type: String, default: "0" },
-    relation: {}
+    role: { type: Number, default: 0 },
+    grade: { type: Number },
+    relation: { type: Number }
   },
   data() {
     return {
       relationData: this.relation,
-      gradeData: this.grade,
-      bidTypeDict: {
-        "974": "公开招标",
-        "975": "询价公告",
-        "978": "竞争性谈判",
-        "977": "单一来源",
-        "979": "资格预审",
-        "976": "邀请公告",
-        "982": "中标公告",
-        "981": "更正公告",
-        "990": "其他公告",
-        "984": "其他公告",
-        "985": "其他公告",
-        "2653": "竞争性磋商",
-        "2655": "成交公告",
-        "2656": "废标终止",
-        "998": "公开招标",
-        "997": "询价公告",
-        "1000": "竞争性谈判",
-        "999": "单一来源",
-        "1001": "资格预审",
-        "996": "邀请公告",
-        "1004": "中标公告",
-        "1003": "更正公告",
-        "1012": "其他公告",
-        "1006": "其他公告",
-        "1007": "其他公告",
-        "2654": "竞争性磋商",
-        "2657": "成交公告",
-        "2658": "废标终止"
-      },
-      labelGradeOptions: ['初级', '中级', '高级']
+      gradeData: this.grade
     };
   },
+  filters: {
+    formatTime(enTime) {
+      var date = new Date(enTime);
+      var y = date.getFullYear();
+      var m =
+        date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1;
+      var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      var mi =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      var s =
+        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      return `${y}-${m}-${d} ${h}:${mi}:${s}`;
+    }
+  },
   methods: {
-    changeRelation(data) {
-      this.$emit("changeRelation", data);
+    onDataItemChange() {
+      this.$emit("dataItemChange", {
+        id: this.id,
+        relation: this.relationData,
+        grade: this.gradeData
+      });
     }
   }
 };

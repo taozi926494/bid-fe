@@ -8,7 +8,5 @@ export const getUser = () => {
 }
 
 export const setUser = user => {
-    console.log('i am in set user')
     Cookies.set('userInfo', JSON.stringify(user))
-    console.log(Cookies.get('userInfo'))
 }

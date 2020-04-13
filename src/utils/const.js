@@ -1,15 +1,9 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-// import mock from '@/mock';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+export const REGIONS = ["河北", "山西", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南",
+    "湖北", "湖南", "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "台湾", "北京",
+    "天津", "上海", "重庆", "香港", "澳门", "内蒙古", "广西", "西藏", "宁夏", "新疆"
+]
 
-Vue.config.productionTip = false
-Vue.use(ElementUI);
-
-var BID_TYPE = {
+export const BID_TYPE = {
     "974": "公开招标",
     "975": "询价公告",
     "978": "竞争性谈判",
@@ -40,24 +34,18 @@ var BID_TYPE = {
     "2658": "废标终止"
 }
 
-var BID_TYPE_CN = {};
+var _BID_TYPE_CN = {};
 for (const key in BID_TYPE) {
     const val = BID_TYPE[key];
-    if (BID_TYPE_CN[val] == undefined) {
-        BID_TYPE_CN[val] = [];
+    if (_BID_TYPE_CN[val] == undefined) {
+        _BID_TYPE_CN[val] = [];
     }
-    BID_TYPE_CN[val].push(key);
+    _BID_TYPE_CN[val].push(key);
 }
 
-Vue.prototype.$BID_TYPE = BID_TYPE
-Vue.prototype.$BID_TYPE_CN = BID_TYPE_CN
+export const BID_TYPE_CN = _BID_TYPE_CN
 
-Vue.prototype.$REGIONS = ["河北", "山西", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南",
-    "湖北", "湖南", "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "台湾", "北京",
-    "天津", "上海", "重庆", "香港", "澳门", "内蒙古", "广西", "西藏", "宁夏", "新疆"
-]
-
-Vue.prototype.$IT_LEVELS = [{
+export const IT_LEVELS = [{
         level: '初级',
         tip: '信息管理系统、OA等非智能系统建设阶段',
     },
@@ -70,10 +58,3 @@ Vue.prototype.$IT_LEVELS = [{
         tip: '明显的大数据、人工智能建设项目',
     }
 ]
-
-
-new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app')

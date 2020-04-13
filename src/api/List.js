@@ -1,12 +1,12 @@
 import request from '../utils/request.js'
 const querystring = require('querystring')
 
-export function getListApi(params) {
+export function listDataApi(data) {
     return new Promise((resolve, reject) => {
         request({
             url: '/dataset',
-            method: 'get',
-            params: params
+            method: 'post',
+            data: querystring.stringify(data)
         }).then((res) => {
             resolve(res)
         }).catch((e) => {

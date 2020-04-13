@@ -17,8 +17,21 @@ export const loginApi = (params) => {
 }
 
 
+export const getUserApi = () => {
+    return new Promise((resolve, reject) => {
+        request({
+            url: '/user',
+            method: 'get'
+        }).then(res => {
+            resolve(res)
+        }).catch(e => {
+            reject(false)
+        })
+    })
+}
 
-export const subscription = (params) => {
+
+export const updateUserApi = (params) => {
     return new Promise((resolve, reject) => {
         request({
             url: '/user',
@@ -27,7 +40,7 @@ export const subscription = (params) => {
         }).then((res) => {
             resolve(res)
         }).catch((e) => {
-            reject(e)
+            reject(false)
         })
     })
 }

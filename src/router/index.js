@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import layout from '../views/Layout/Layout.vue';
-import { getUser } from '@/utils/user'
+import { getToken } from '@/utils/auth'
 
 Vue.use(VueRouter)
 
@@ -18,11 +18,11 @@ const routes = [{
         path: '/detail',
         component: () =>
             import ('@/views/Info/Info.vue')
-    }, {
-        path: '/login',
-        component: () =>
-            import ('@/views/Login/Login.vue')
     }]
+}, {
+    path: '/login',
+    component: () =>
+        import ('@/views/Login/Login.vue')
 }]
 
 const whiteList = ['/login']
@@ -33,15 +33,15 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (getUser() == false) {
-        console.log('no')
+    const token = getToken();
+    if (token != undefined && token != 'undefined') {
+        next()
+    } else {
         if (whiteList.indexOf(to.path) > -1) {
             next();
         } else {
             next({ path: '/login' })
         }
-    } else {
-        next()
     }
 })
 
