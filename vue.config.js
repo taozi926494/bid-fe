@@ -1,5 +1,5 @@
 module.exports = {
-    assetsDir: "static",
+    assetsDir: "bid/static",
     css: {
         loaderOptions: {
             sass: {

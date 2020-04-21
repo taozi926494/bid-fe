@@ -4,7 +4,7 @@ import { getToken, getEmail, setToken } from './auth';
 
 const service = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? '' : '填写真正的后端地址',
-    baseURL: process.env.NODE_ENV === 'development' ? 'http://172.16.13.21:5100' /* 'http://localhost:5100' */ : 'http://127.0.0.1:5010',
+    baseURL: process.env.NODE_ENV === 'development' ? 'http://172.16.13.21:5050' /* 'http://localhost:5100' */ : '/bid',
     timeout: 15000,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     withCredentials: true

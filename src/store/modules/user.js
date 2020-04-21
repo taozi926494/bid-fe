@@ -4,9 +4,12 @@ const querystring = require('querystring')
 
 export const genUserParams = user => {
     let params = {}
-        // params.username = user.username
     params.email = user.email
     params.booking_circle = user.booking_circle
+
+    // 防止输入多个空格
+    const reg = new RegExp(/\s+/, 'g')
+    params.booking_keywords = user.booking_keywords.trim().replace(reg, ' ')
     params.booking_regions = user.booking_regions.join(',')
     let bookingCodes = []
     for (const bookType of user.booking_types) {
@@ -24,7 +27,8 @@ export const user = {
 
         booking_types: [],
         booking_regions: [],
-        booking_circle: ''
+        booking_circle: '',
+        booking_keywords: ''
     },
     mutations: {
         SET_BOOKING_TYPES(state, val) {
@@ -35,6 +39,9 @@ export const user = {
         },
         SET_BOOKING_REGIONS(state, regions) {
             state.booking_regions = regions.slice(0)
+        },
+        SET_BOOKING_KEYWORDS(state, val) {
+            state.booking_keywords = val
         },
         SET_USER_NAME(state, val) {
             state.username = val
@@ -62,6 +69,7 @@ export const user = {
                     }
                 }
                 commit('SET_BOOKING_TYPES', bookingTypes)
+                commit('SET_BOOKING_KEYWORDS', user.booking_keywords)
                 commit('SET_BOOKING_CIRCLE', user.booking_circle)
                 commit('SET_BOOKING_REGIONS', user.booking_regions.split(','))
             }

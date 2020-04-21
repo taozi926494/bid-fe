@@ -18,6 +18,9 @@
         <el-checkbox v-for="region in REGIONS" :label="region" :key="region">{{ region }}</el-checkbox>
       </el-checkbox-group>
 
+      <p class="title">关键字（多个关键字用空格隔开）</p>
+      <el-input v-model="bookingKeywords"></el-input>
+
       <el-button size="mini" type="primary" style="margin-top: 20px;" @click="booking">订阅</el-button>
     </el-form>
   </div>
@@ -62,6 +65,14 @@ export default {
       },
       set: function(val) {
         this.$store.commit("SET_BOOKING_CIRCLE", val);
+      }
+    },
+    bookingKeywords: {
+      get: function() {
+        return this.$store.state.user.booking_keywords;
+      },
+      set: function(val) {
+        this.$store.commit("SET_BOOKING_KEYWORDS", val);
       }
     }
   },
