@@ -57,6 +57,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     id: { type: Number },
@@ -77,8 +78,8 @@ export default {
     };
   },
   filters: {
-    formatTime(enTime) {
-      var date = new Date(enTime);
+    formatTime(enTime){
+      var date = new Date(enTime+"+0800");
       var y = date.getFullYear();
       var m =
         date.getMonth() + 1 < 10
